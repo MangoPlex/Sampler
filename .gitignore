@@ -1,0 +1,17 @@
+# From https://gist.github.com/lordofthelake/5833336
+# Eclipse
+.classpath
+.project
+.settings/
+ 
+# Intellij
+.idea/
+*.iml
+*.iws
+ 
+# Mac
+.DS_Store
+ 
+# Maven
+log/
+target/
