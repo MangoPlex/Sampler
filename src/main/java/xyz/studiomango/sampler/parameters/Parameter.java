@@ -19,6 +19,10 @@ public class Parameter {
         return inputNode.avgSampleAt(ctx, sampleIndex);
     }
     
+    public double valueAtOrElipson(SamplerContext ctx, long sampleIndex) {
+        return Math.max(1e-9, valueAt(ctx, sampleIndex));
+    }
+    
     public void resetInputNode() {
         if (inputNode == null) return;
         inputNode.resetNode();

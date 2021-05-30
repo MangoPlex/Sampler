@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioFormat;
 public class SamplerContext {
     
     public int sampleRate = 44100;
-    public int bitsDepth = 8;
+    public int bitsDepth = 16;
     public int channels = 2;
     
     public AudioFormat getFormat() {

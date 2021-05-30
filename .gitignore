@@ -15,3 +15,7 @@
 # Maven
 log/
 target/
+
+# Test files
+*.mp3
+*.wav

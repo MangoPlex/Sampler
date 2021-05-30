@@ -13,6 +13,7 @@ public abstract class Node {
     public abstract void resetThisNode();
     
     public void connectTo(Node node) {
+        if (node == this) throw new IllegalArgumentException("Recursive node not allowed. See BufferedNode");
         node.inputNodes.add(this);
     }
     public void connectTo(Parameter param) {
