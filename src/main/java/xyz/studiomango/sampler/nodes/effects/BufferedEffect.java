@@ -17,7 +17,7 @@ public class BufferedEffect extends BufferedNode {
     
     @Override
     public void processBuffer(SamplerContext ctx, double[] bufferIn, double[] bufferOut, long startIndex, int channelNo) {
-        for (int i = 0; i < 256; i++) bufferOut[i] = bufferIn[i];
+        System.arraycopy(bufferIn, 0, bufferOut, 0, 256);
     }
 
     @Override

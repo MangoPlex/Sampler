@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Control;
 import javax.sound.sampled.Control.Type;
 import javax.sound.sampled.LineListener;
@@ -13,10 +14,20 @@ import javax.sound.sampled.TargetDataLine;
 import xyz.studiomango.sampler.SamplerContext;
 import xyz.studiomango.sampler.nodes.Node;
 
+/**
+ * TargetDataLine node which implements {@link TargetDataLine}. You can use this node with {@link AudioInputStream}, which
+ * you can use it to write to file. Really useful, isn't it?
+ * @author nahkd
+ *
+ */
 public class TargetDataLineNode extends Node implements TargetDataLine {
 
-    private SamplerContext ctx;
+    /**
+     * The predefined samples count
+     */
     public final int samples;
+    
+    private SamplerContext ctx;
     
     private int currentSample = 0;
     
@@ -102,5 +113,13 @@ public class TargetDataLineNode extends Node implements TargetDataLine {
     public double sampleAt(SamplerContext ctx, long index, int channelNo) {return 0;}
     @Override
     public void resetThisNode() {}
+    
+    /**
+     * Create new audio input stream from this node
+     * @return
+     */
+    public AudioInputStream createStream() {
+        return new AudioInputStream(this);
+    }
 
 }

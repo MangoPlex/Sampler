@@ -5,12 +5,15 @@ import xyz.studiomango.sampler.nodes.Node;
 import xyz.studiomango.sampler.parameters.Parameter;
 
 /**
- * Percentage audio gain. This node will scale the PCM data from -gain to +gain
+ * Percentage audio gain. This node will scale the PCM data from -value to +value, based on {@link #gain} parameter
  * @author nahkd
  *
  */
 public class Gain extends Node {
     
+    /**
+     * The gain parameter. The default value is 1.0, which is 100% of the input
+     */
     public final Parameter gain = new Parameter(1.0);
 
     @Override

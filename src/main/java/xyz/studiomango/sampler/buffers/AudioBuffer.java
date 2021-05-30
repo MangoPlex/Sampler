@@ -8,14 +8,42 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import xyz.studiomango.sampler.nodes.generators.Player;
+
 import javax.sound.sampled.AudioFormat.Encoding;
 
+/**
+ * The audio buffer. This contains the audio data, which can be played by {@link Player} node. To create new empty
+ * buffer, see {@link #AudioBuffer(int, int, int)}. To load from file, see {@link #AudioBuffer(File)}
+ * @author nahkd
+ *
+ */
 public class AudioBuffer {
     
+    /**
+     * Buffer sampling rate (a.k.a how much samples per second)
+     */
     public final int sampleRate;
+    
+    /**
+     * The number of samples inside this buffer. The audio duration can be calculated by using this simple formula:
+     * d = {@link #samples} / {@link #sampleRate}
+     */
     public final int samples;
+    
+    /**
+     * Channel data. The first dimension is the channel index, and the second one is the sample index, which must always
+     * less than {@link #samples}
+     */
     public final double[][] channelsData;
     
+    /**
+     * Create new empty audio buffer. The buffer does not contains any meaningful audio data
+     * @param sampleRate The buffer sampling rate
+     * @param samples The number of samples
+     * @param channels Channels count
+     */
     public AudioBuffer(int sampleRate, int samples, int channels) {
         this.sampleRate = sampleRate;
         this.samples = samples;
@@ -24,6 +52,10 @@ public class AudioBuffer {
         for (int i = 0; i < channels; i++) channelsData[i] = new double[samples];
     }
     
+    /**
+     * Load audio buffer from file. Currently only *.wav files are supported (and they must be uncompressed)
+     * @param file
+     */
     public AudioBuffer(File file) {
         AudioFileFormat format;
         AudioInputStream stream;

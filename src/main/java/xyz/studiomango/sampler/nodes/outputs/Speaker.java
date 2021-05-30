@@ -11,11 +11,27 @@ import javax.sound.sampled.SourceDataLine;
 import xyz.studiomango.sampler.SamplerContext;
 import xyz.studiomango.sampler.nodes.Node;
 
+/**
+ * The system speaker output node. This node does not produce any audio.
+ * @author nahkd
+ *
+ */
 public class Speaker extends Node {
 
+    /**
+     * The data line to write
+     */
     public SourceDataLine dataLine;
+    
+    /**
+     * The context, required for creating data line
+     */
     public final SamplerContext ctx;
     
+    /**
+     * Create new speaker output node
+     * @param ctx
+     */
     public Speaker(SamplerContext ctx) {
         this.ctx = ctx;
         
@@ -36,6 +52,11 @@ public class Speaker extends Node {
     public long getCurrentSampleIndex() {return currentSample;}
     
     private byte[] channelsBuffer;
+    
+    /**
+     * Play next n samples to speaker. See {@link #nextSeconds(double)} for friendlier solution
+     * @param count The number of samples to read then play
+     */
     public void nextSamples(long count) {
         if (channelsBuffer == null) channelsBuffer = new byte[ctx.channels * ctx.bitsDepth / 8];
         
@@ -54,14 +75,20 @@ public class Speaker extends Node {
         }
     }
     
+    /**
+     * Play next t seconds to speaker
+     * @param seconds The number of seconds to read then play
+     */
     public void nextSeconds(double seconds) {
         nextSamples(Math.round(ctx.sampleRate * seconds));
     }
 
     @Override
-    public void resetThisNode() {
-    }
+    public void resetThisNode() {}
     
+    /**
+     * Drain all enqueued audio data and close the speaker. Always call it when you no longer need speaker node
+     */
     public void closeSpeaker() {
         dataLine.drain();
         dataLine.close();

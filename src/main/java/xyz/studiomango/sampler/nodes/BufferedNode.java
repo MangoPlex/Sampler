@@ -10,8 +10,19 @@ import xyz.studiomango.sampler.SamplerContext;
  */
 public abstract class BufferedNode extends Node {
     
+    /**
+     * An array of buffers for processing. {@link BufferedNode} will reuse buffers for performance
+     */
     public double[][] buffers;
+    
+    /**
+     * The temporary input buffer, which will be reused for performance
+     */
     public double[] tempBufferIn;
+    
+    /**
+     * The processing buffer size
+     */
     public final int bufferSize;
     
     public BufferedNode(int bufferSize) {
@@ -44,10 +55,19 @@ public abstract class BufferedNode extends Node {
         return out[(int) (index % bufferSize)];
     }
     
-    public void putToBuffer(SamplerContext ctx, long startIndex, double[] buffer, int channelNo) {
+    private void putToBuffer(SamplerContext ctx, long startIndex, double[] buffer, int channelNo) {
         for (int i = 0; i < buffer.length; i++) buffer[i] = inputsSampleAt(ctx, startIndex + i, channelNo);
     }
     
+    /**
+     * Process a small chunk of audio buffer. The input buffer is so short that you can achieve low latency (unless you set
+     * the buffer size that's 1/2 of context sampling rate)
+     * @param ctx The context
+     * @param bufferIn Input buffer, contains audio data from {@link #inputsSampleAt(SamplerContext, long, int)}
+     * @param bufferOut Output buffer
+     * @param startIndex The start index of buffer
+     * @param channelNo The channel index
+     */
     public abstract void processBuffer(SamplerContext ctx, double[] bufferIn, double[] bufferOut, long startIndex, int channelNo);
 
 }

@@ -2,6 +2,12 @@ package xyz.studiomango.sampler.nodes.effects.memes;
 
 import xyz.studiomango.sampler.nodes.effects.FFTEqualizer;
 
+/**
+ * Deep fry audio effect node. This node is capable of deep frying your audio into some sort of "earrape", which
+ * might cause ear bleeding. Use this with caution.
+ * @author nahkd
+ *
+ */
 public class DeepFry extends FFTEqualizer {
     
     public DeepFry() {
