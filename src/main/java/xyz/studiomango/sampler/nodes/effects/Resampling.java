@@ -23,24 +23,15 @@ public class Resampling extends BufferedNode {
     public Resampling(int samples) {
         super(samples);
     }
-    
-    private double previousSample = 0;
-    private double sampleMixing = 0.5;
 
     @Override
     public void processBuffer(SamplerContext ctx, double[] bufferIn, double[] bufferOut, long startIndex, int channelNo) {
         for (int i = 0; i < bufferOut.length; i++) {
             bufferOut[i] = bufferIn[(int) (Math.round(i * scale.valueAtOrElipson(ctx, startIndex)) % bufferIn.length)];
         }
-        
-        // Prevent click sounds (hopefully)
-        bufferOut[0] = bufferOut[0] * sampleMixing + previousSample * (1 - sampleMixing);
-        previousSample = bufferOut[bufferOut.length - 1];
     }
 
     @Override
-    public void resetThisNode() {
-        previousSample = 0;
-    }
+    public void resetThisNode() {}
 
 }

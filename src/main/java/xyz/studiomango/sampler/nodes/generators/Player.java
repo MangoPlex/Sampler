@@ -26,6 +26,12 @@ public class Player extends Node {
     public double sampleSpeed = 1;
     
     /**
+     * The duration to play in samples unit. Calculate the number of samples based on seconds by using this formula: context
+     * sample rate * time in seconds. If this value is less than or equals 0, it will play the entire buffer
+     */
+    public int samplesDuration = 0;
+    
+    /**
      * Create new audio buffer player
      * @param buffer
      */
@@ -35,6 +41,7 @@ public class Player extends Node {
 
     @Override
     public double sampleAt(SamplerContext ctx, long index, int channelNo) {
+        if (samplesDuration > 0 && samplesDuration < index) return 0;
         if (channelNo >= buffer.channelsData.length) return 0;
         int bufferSampleIndex = (int) (index * (buffer.sampleRate * sampleSpeed) / ctx.sampleRate);
         if (bufferSampleIndex >= buffer.samples) return 0;
