@@ -13,6 +13,8 @@ cd Sampler
 mvn install
 ```
 
+You can also use [GitHub Package](https://github.com/MangoPlex/Sampler/packages).
+
 ## Hello world with Sampler
 ```java
 SamplerContext ctx = new SamplerContext();
